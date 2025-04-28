@@ -25,7 +25,7 @@ app.post('/mincost', (req, res) => {
     return res.status(400).send({ error: 'Input must be an array' });
   }
 
-  const result = mincost(arr);  // ✅ must match exactly: mincost, not minCost
+  const result = mincost(arr); 
   res.send({ result });
 });
 
