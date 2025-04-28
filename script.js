@@ -1,34 +1,34 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+// Correct spelling
 function mincost(arr) {
   let totalCost = 0;
 
   while (arr.length > 1) {
-    // Sort to get the two smallest ropes
     arr.sort((a, b) => a - b);
-    
-    // Remove the two smallest
     const first = arr.shift();
     const second = arr.shift();
-
-    // Combine them and calculate cost
     const cost = first + second;
     totalCost += cost;
-
-    // Push the combined rope back to the array
     arr.push(cost);
   }
 
   return totalCost;
 }
 
-function calculateMinCost() {
-  const input = document.getElementById("ropeInput").value;
-  const ropeArray = input.split(",").map(num => parseInt(num.trim())).filter(n => !isNaN(n));
+app.post('/mincost', (req, res) => {
+  const { arr } = req.body;
 
-  if (ropeArray.length < 1) {
-    document.getElementById("result").innerText = "Please enter at least one rope length.";
-    return;
+  if (!Array.isArray(arr)) {
+    return res.status(400).send({ error: 'Input must be an array' });
   }
 
-  const result = mincost(ropeArray);
-  document.getElementById("result").innerText = `Minimum cost to connect ropes: ${result}`;
-}
+  const result = mincost(arr);  // ✅ must match exactly: mincost, not minCost
+  res.send({ result });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
