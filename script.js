@@ -7,12 +7,12 @@ function mincost(arr) {
   let totalCost = 0;
 
   while (arr.length > 1) {
-    arr.sort((a, b) => a - b);
-    const first = arr.shift();
-    const second = arr.shift();
-    const cost = first + second;
-    totalCost += cost;
-    arr.push(cost);
+    arr.sort((a, b) => a - b);  // Sort the array
+    const first = arr.shift();   // Remove the smallest rope
+    const second = arr.shift();  // Remove the next smallest rope
+    const cost = first + second; // Calculate the merge cost
+    totalCost += cost;           // Add the cost to the total
+    arr.push(cost);              // Add the new merged rope back to the array
   }
 
   return totalCost;
